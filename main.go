@@ -17,7 +17,7 @@ func main() {
 			"message": "pong!",
 		})
 	})
-
+	// run gin
 	err := r.Run()
 	if err != nil {
 		panic(err)
