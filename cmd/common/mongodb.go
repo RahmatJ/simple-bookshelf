@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"log"
 )
 
 func NewConnection() *mongo.Client {
@@ -12,7 +13,8 @@ func NewConnection() *mongo.Client {
 	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
 
 	if err != nil {
-		panic(err)
+		fmt.Println("Error connect")
+		log.Fatal(err)
 	}
 
 	defer func() {
