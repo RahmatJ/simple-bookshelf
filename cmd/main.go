@@ -2,14 +2,21 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"log"
 	"simple-bookshelf/cmd/common"
-	"simple-bookshelf/cmd/controllers"
+	"simple-bookshelf/cmd/handler"
 )
 
 func SetupRouter() (*gin.Engine, error) {
 	//	init gin
 	r := gin.Default()
-	r.GET("/ping", controllers.HealthCheckHandler)
+
+	// Setup handler
+	healthCheckHandler := handler.NewHealthCheckHandler()
+
+	// set route
+	r.GET("/ping", healthCheckHandler.CheckHealth)
+
 	// run gin
 	err := r.Run()
 	return r, err
@@ -23,6 +30,7 @@ func main() {
 	_, err := SetupRouter()
 
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
+		return
 	}
 }

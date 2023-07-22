@@ -5,7 +5,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
-	"simple-bookshelf/cmd/controllers"
+	"simple-bookshelf/cmd/handler"
 	"testing"
 )
 
@@ -18,7 +18,11 @@ func TestPingPong(t *testing.T) {
 	// Given
 	expectedResult := `{"message":"pong!"}`
 	r := SetupRouter()
-	r.GET("/ping", controllers.HealthCheckHandler)
+
+	// Setup Handler
+	healthCheckHandler := handler.NewHealthCheckHandler()
+
+	r.GET("/ping", healthCheckHandler.CheckHealth)
 
 	// When
 	req, _ := http.NewRequest("GET", "/ping", nil)
