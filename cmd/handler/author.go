@@ -3,7 +3,7 @@ package handler
 import (
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"simple-bookshelf/cmd/author"
+	"simple-bookshelf/test/cmd/mock"
 )
 
 type AuthorHandler struct {
@@ -14,6 +14,6 @@ func NewAuthorHandler() *AuthorHandler {
 }
 
 func (h *AuthorHandler) GetAuthorById(context *gin.Context) {
-	authorData := author.Author{Id: "1", Name: "Aoyama Gosho"}
+	authorData := mock.GenerateAuthor()
 	context.JSON(http.StatusOK, authorData)
 }

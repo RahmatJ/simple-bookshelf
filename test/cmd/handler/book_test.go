@@ -6,45 +6,41 @@ import (
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
-	"simple-bookshelf/cmd/author"
+	"simple-bookshelf/cmd/book"
 	"simple-bookshelf/cmd/handler"
 	"simple-bookshelf/test/cmd/mock"
 	"testing"
 )
 
-func TestGetAuthorById(t *testing.T) {
-	// Setup
+func TestGetBook(t *testing.T) {
+	//	Setup
 	r := SetupRouter()
-	// Setup Handler
-	authorHandler := handler.NewAuthorHandler()
 
-	r.GET("/authors/:id", authorHandler.GetAuthorById)
+	//	Setup Handler
+	bookHandler := handler.BookHandler{}
 
-	// Test Case List
+	r.GET("/books", bookHandler.GetBook)
+
+	//	Test Case List
 	testCases := []struct {
 		description string
-		input       string
-		expect      author.Author
+		expect      book.Book
 	}{
 		{
-			description: "Should return author data",
-			input:       "1",
-			expect:      mock.GenerateAuthor(),
+			description: "Should return Book data",
+			expect:      mock.GenerateBook(),
 		},
 	}
 
 	for _, testData := range testCases {
-
 		t.Run(testData.description, func(t *testing.T) {
-			// Given
-
-			// When
-			req, _ := http.NewRequest("GET", fmt.Sprintf("/authors/%s", testData.input), nil)
+			//	Given
+			//	When
+			req, _ := http.NewRequest("GET", fmt.Sprintf("/books"), nil)
 			w := httptest.NewRecorder()
 			r.ServeHTTP(w, req)
-
-			// Then
-			var result author.Author
+			//	Then
+			var result book.Book
 			err := json.Unmarshal(w.Body.Bytes(), &result)
 			if err != nil {
 				t.Errorf("Expect %+v, got error %s", testData.expect, err.Error())
@@ -53,6 +49,5 @@ func TestGetAuthorById(t *testing.T) {
 			assert.Equal(t, http.StatusOK, w.Code)
 			assert.Equal(t, testData.expect, result)
 		})
-
 	}
 }
