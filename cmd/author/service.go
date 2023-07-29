@@ -1,6 +1,9 @@
 package author
 
-import "simple-bookshelf/test/cmd/mock"
+import (
+	"fmt"
+	"simple-bookshelf/test/cmd/mock"
+)
 
 type Service interface {
 	GetAuthors() ([]Author, error)
@@ -9,6 +12,8 @@ type Service interface {
 	PatchAuthorById(id string, name string) (Author, error)
 	DeleteAuthorById(id string) error
 }
+
+//TODO(Rahmat): Please Fix circular dependencies, might need new package for it
 
 type service struct {
 }
@@ -39,5 +44,6 @@ func (s *service) PatchAuthorById(id string, name string) (Author, error) {
 }
 
 func (s *service) DeleteAuthorById(id string) error {
+	fmt.Print(id)
 	return nil
 }

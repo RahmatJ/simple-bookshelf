@@ -16,7 +16,8 @@ func TestGetAuthorById(t *testing.T) {
 	// Setup
 	r := SetupRouter()
 	// Setup Handler
-	authorHandler := handler.NewAuthorHandler()
+	newService := author.NewService()
+	authorHandler := handler.NewAuthorHandler(newService)
 
 	r.GET("/authors/:id", authorHandler.GetAuthorById)
 
@@ -29,7 +30,7 @@ func TestGetAuthorById(t *testing.T) {
 		{
 			description: "Should return author data",
 			input:       "1",
-			expect:      mock.GenerateAuthor(),
+			expect:      mock.GenerateAuthor(""),
 		},
 	}
 
