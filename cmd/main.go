@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"log"
+	"simple-bookshelf/cmd/author"
 	"simple-bookshelf/cmd/common"
 	"simple-bookshelf/cmd/handler"
 )
@@ -11,9 +12,12 @@ func SetupRouter() (*gin.Engine, error) {
 	//	init gin
 	r := gin.Default()
 
+	// Setup Service
+	authorService := author.NewService()
+
 	// Setup handler
 	healthCheckHandler := handler.NewHealthCheckHandler()
-	authorHandler := handler.NewAuthorHandler()
+	authorHandler := handler.NewAuthorHandler(authorService)
 	bookHandler := handler.NewBookHandler()
 
 	// set route
