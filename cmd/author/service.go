@@ -2,7 +2,6 @@ package author
 
 import (
 	"fmt"
-	"simple-bookshelf/test/cmd/mock"
 )
 
 type Service interface {
@@ -13,8 +12,6 @@ type Service interface {
 	DeleteAuthorById(id string) error
 }
 
-//TODO(Rahmat): Please Fix circular dependencies, might need new package for it
-
 type service struct {
 }
 
@@ -23,22 +20,22 @@ func NewService() *service {
 }
 
 func (s *service) GetAuthors() ([]Author, error) {
-	authorData := mock.GenerateAuthor("")
+	authorData := GenerateAuthor("")
 	return []Author{authorData}, nil
 }
 
 func (s *service) GetAuthorById(id string) (Author, error) {
-	authorData := mock.GenerateAuthor("")
+	authorData := GenerateAuthor("")
 	authorData.Id = id
 	return authorData, nil
 }
 
 func (s *service) CreateAuthor(name string) (Author, error) {
-	authorData := mock.GenerateAuthor(name)
+	authorData := GenerateAuthor(name)
 	return authorData, nil
 }
 func (s *service) PatchAuthorById(id string, name string) (Author, error) {
-	authorData := mock.GenerateAuthor(name)
+	authorData := GenerateAuthor(name)
 	authorData.Id = id
 	return authorData, nil
 }
